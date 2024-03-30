@@ -1,0 +1,4 @@
+[submodule "server"]
+	path = server
+	url = https://github.com/kaltura/server.git
+	branch = Tucana-20.9.0
