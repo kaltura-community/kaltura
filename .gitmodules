@@ -1,0 +1,8 @@
+[submodule "server"]
+	path = server
+	url = https://github.com/kaltura/server.git
+	branch = Tucana-20.9.0
+[submodule "clients-generator"]
+	path = clients-generator
+	url = https://github.com/kaltura/clients-generator.git
+	branch = Tucana-20.9.0
