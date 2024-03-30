@@ -27,7 +27,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: client-libs-version-${{ github.run_id}}
+          name: client-libs-${{ inputs.version }}-${{ github.run_id}}
           path: client-libs
       - name: test
         run: |
