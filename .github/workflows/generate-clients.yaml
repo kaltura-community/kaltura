@@ -1,0 +1,35 @@
+name: Generate Clients
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Name of the client'
+        required: true
+        default: 'Tucana-20.9.0'
+
+permissions:
+  contents: read
+
+jobs:
+  generate-clients:
+    uses: kaltura-community/ci-pipelines/.github/workflows/build-artifact.yaml@dev
+    with:
+      name: client-libs
+      version: ${{ inputs.version }}
+      dockerfile: ./tools/clients-generator.Dockerfile
+      context: .
+
+  release:
+    runs-on: ubuntu-latest
+    needs: generate-clients
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: client-libs-version-${{ github.run_id}}
+          path: client-libs
+      - name: test
+        run: |
+          ls -la .
+          ls -la client-libs
