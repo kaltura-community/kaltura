@@ -48,12 +48,11 @@ ADD https://github.com/kaltura/clients-generator.git#${VERSION} ${BASE_DIR}/clie
 # Generate the clients
 RUN for file in $(find ${APP_DIR}/configurations -type f); do mv $file ${file/.template}; done && \
     php ${APP_DIR}/api_v3/generator/generate_xml.php /tmp && \
-    php ${APP_DIR}/generator/generate.php -x /tmp/KalturaClient.xml
-
-RUN tar -czf ${TMP_DIR}/clients-libs-${VERSION}.tar.gz  ${WEB_DIR}/content/clientlibs
+    php ${APP_DIR}/generator/generate.php -x /tmp/KalturaClient.xml && \
+    tar -czf ${TMP_DIR}/client-libs-${VERSION}.tar.gz  ${WEB_DIR}/content/clientlibs
 
 FROM scratch
 
 ARG TMP_DIR
 ARG VERSION
-COPY --from=generate-clients ${TMP_DIR}/clients-libs-${VERSION}.tar.gz /clients-libs-${VERSION}.tar.gz
+COPY --from=generate-clients ${TMP_DIR}/client-libs-${VERSION}.tar.gz /client-libs-${VERSION}.tar.gz
