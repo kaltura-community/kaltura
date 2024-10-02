@@ -28,7 +28,7 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
   generate-clients:
-    uses: kaltura-community/ci-pipelines/.github/workflows/build-artifact.yaml@dev
+    uses: kaltura-community/ci-pipelines/.github/workflows/build-artifact.yaml@main
     needs: setup
     with:
       name: client-libs
@@ -39,6 +39,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     needs: [generate-clients, setup]
+    permissions: write-all
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
