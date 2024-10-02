@@ -26,6 +26,7 @@ jobs:
             VERSION=$(curl -s https://raw.githubusercontent.com/kaltura/server/HEAD/VERSION.txt)
           fi
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+
   generate-clients:
     uses: kaltura-community/ci-pipelines/.github/workflows/build-artifact.yaml@dev
     needs: setup
@@ -42,9 +43,13 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: client-libs-${{ needs.setup.outputs.version }}.tar.gz
+          name: client-libs-${{ needs.setup.outputs.version }}
           path: ./client-libs/
       - name: test
         run: |
           ls -la .
           ls -la client-libs
+      # - name: Create release
+      # - uses: ncipollo/release-action@v1
+      #   with:
+      #     artifacts: ./client-libs/*.tar.gz
