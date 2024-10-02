@@ -1,4 +1,4 @@
-ARG KALTURA_PLATFORM_VERSION="Tucana-20.9.0"
+ARG VERSION="Tucana-20.9.0"
 ARG BASE_IMAGE=debian:bullseye-slim
 ARG DEBIAN_FRONTEND=noninteractive
 ARG TZ=Etc/UTC
@@ -46,7 +46,7 @@ RUN ln -s ${APP_DIR}/api_v3/web ${APP_DIR}/alpha/web/api_v3
 
 FROM kaltura-base as generate-clients
 
-ARG KALTURA_PLATFORM_VERSION
+ARG VERSION
 ARG BASE_DIR
 ARG APP_DIR
 
@@ -70,5 +70,5 @@ RUN tar -czf ${TMP_DIR}/clients-libs-$(cat ${APP_DIR}/VERSION.txt).tar.gz  ${WEB
 FROM scratch
 
 ARG TMP_DIR
-ARG KALTURA_PLATFORM_VERSION
-COPY --from=generate-clients ${TMP_DIR}/clients-libs-${KALTURA_PLATFORM_VERSION}.tar.gz /clients-libs-${KALTURA_PLATFORM_VERSION}.tar.gz
+ARG VERSION
+COPY --from=generate-clients ${TMP_DIR}/clients-libs-${VERSION}.tar.gz /clients-libs-${VERSION}.tar.gz
