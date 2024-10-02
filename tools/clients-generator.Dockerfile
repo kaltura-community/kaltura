@@ -20,7 +20,10 @@ ARG TMP_DIR
 ARG LOG_DIR
 
 #Install Dependencies
-RUN mkdir -p ${BASE_DIR} && \
+RUN apt-get update --yes && \
+    apt-get install --no-install-recommends --yes \
+    git && \
+    mkdir -p ${BASE_DIR} && \
     mkdir -p ${APP_DIR}/cache && \
     mkdir -p ${WEB_DIR} && \
     mkdir -p ${APPS_DIR} && \
