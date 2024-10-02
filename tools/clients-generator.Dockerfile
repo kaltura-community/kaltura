@@ -1,5 +1,5 @@
 ARG VERSION="Tucana-20.9.0"
-ARG BASE_IMAGE=debian:bullseye-slim
+ARG BASE_IMAGE=php:8.2-apache-bookworm
 ARG DEBIAN_FRONTEND=noninteractive
 ARG TZ=Etc/UTC
 
@@ -20,20 +20,7 @@ ARG TMP_DIR
 ARG LOG_DIR
 
 #Install Dependencies
-RUN apt-get update --yes && \
-    apt-get install --no-install-recommends --yes \
-    apache2 \
-    php7.4 \
-    php7.4-fpm \
-    php7.4-opcache \
-    php7.4-mbstring \
-    php7.4-json \
-    php7.4-xml \
-    php7.4-curl \
-    php7.4-redis \
-    php7.4-memcached \
-    php7.4-apcu && \
-    mkdir -p ${BASE_DIR} && \
+RUN mkdir -p ${BASE_DIR} && \
     mkdir -p ${APP_DIR}/cache && \
     mkdir -p ${WEB_DIR} && \
     mkdir -p ${APPS_DIR} && \
@@ -67,6 +54,7 @@ RUN for file in $(find ${APP_DIR}/configurations -type f); do mv $file ${file/.t
     php ${APP_DIR}/generator/generate.php -x /tmp/KalturaClient.xml
 
 RUN tar -czf ${TMP_DIR}/clients-libs-$(cat ${APP_DIR}/VERSION.txt).tar.gz  ${WEB_DIR}/content/clientlibs
+
 FROM scratch
 
 ARG TMP_DIR
