@@ -48,6 +48,6 @@ jobs:
       - name: Create release
         uses: ncipollo/release-action@v1
         with:
-          name: "Client Libs: ${{ needs.setup.outputs.version }}"
+          name: "Client Libs ${{ needs.setup.outputs.version }}"
           tag: client-libs-${{ needs.setup.outputs.version }}
           artifacts: ./client-libs/*.tar.gz
